@@ -1,7 +1,29 @@
 import logo from './logo.svg';
 import './App.css';
+import { useEffect } from 'react';
 
 function App() {
+
+  const handleTouchStart = (event) => {
+    const touch = event.touches[0];
+    
+    if (touch.clientX < window.innerWidth * 0.1 || touch.clientX > window.innerWidth * 0.9) {
+      event.preventDefault();
+    }
+    if (touch.clientY > window.innerHeight * 0.9) {
+      event.preventDefault();
+    }
+  };
+
+  useEffect(() => {
+
+    document.addEventListener("touchstart", handleTouchStart, { passive: false });
+
+    return () => {
+      document.removeEventListener("touchstart", handleTouchStart,{ passive: false });
+    };
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">
